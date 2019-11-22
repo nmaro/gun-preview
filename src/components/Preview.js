@@ -27,9 +27,7 @@ export const Preview = ({ id, document, onPublish }) => {
         />
       </div>
       <div className="public">
-        <span>
-          <a href={`https://gun-pages.nmaro.now.sh?page=${id}`}>public</a>
-        </span>
+        <span>public</span>
         <h1>{document.title}</h1>
         <div
           className="markdown"
