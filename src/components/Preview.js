@@ -2,12 +2,13 @@ import React from "react";
 
 import marked from "marked";
 
-export const Preview = ({ id, document, onPublish }) => {
+export const Preview = ({ id, priv, epriv, document, onPublish }) => {
   return (
     <div className="document">
       <div className="editor">
         <iframe
-          src={`https://gun-editor.nmaro.now.sh?document=${id}`}
+          src={`https://gun-editor.nmaro.now.sh?id=${id}#priv=${priv ||
+            ""}&epriv=${epriv || ""}`}
           frameBorder="0"
         />
         <div className="controls">

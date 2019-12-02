@@ -1,81 +1,57 @@
 import { Preview } from "./Preview";
 import { GunContinuousSequence } from "crdt-continuous-sequence";
 import React, { useState, useEffect } from "react";
+import { getPub, useGun, getSet, getId, put } from "nicks-gun-utils";
 
 const Gun = require("gun/gun");
+require("gun/sea");
 
-const getId = element => element && element["_"]["#"];
-
-const useRerender = () => {
-  const [, setRender] = useState({});
-  const rerender = () => setRender({});
-  return rerender;
-};
-
-const getSet = (data, id, key) => {
-  const entity = data[id];
-  if (!entity || !entity[key]) {
-    return [];
-  }
-  const set = data[entity[key]["#"]];
-  if (!set) {
-    return [];
-  }
-  const arr = Object.keys(set)
-    .filter(key => key !== "_")
-    .map(key => set[key])
-    .filter(Boolean)
-    .map(ref => data[ref["#"]])
-    .filter(Boolean);
-  return arr;
-};
-
-export const GunPreview = ({ id }) => {
+export const GunPreview = ({ id, priv, epriv }) => {
   const [gun, setGun] = useState(null);
-  const [cs, setCs] = useState(null);
-  const rerender = useRerender();
+  const pub = getPub(id);
+  const pair = pub && priv && { pub, priv, epriv };
+  const [data, onData] = useGun(Gun, useState, pair);
 
   useEffect(() => {
     const gun = Gun({
       peers: ["https://gunjs.herokuapp.com/gun"]
     });
-    const cs = new GunContinuousSequence(gun);
+    gun.get(id).on(onData);
+    gun
+      .get(`${id}.atoms`)
+      .on(onData)
+      .map()
+      .on(onData);
     setGun(gun);
-    setCs(cs);
   }, []);
 
-  useEffect(() => {
-    if (gun) {
-      gun
-        .get(id)
-        .on(rerender)
-        .get("atoms")
-        .map()
-        .on(rerender);
-    }
-  }, [gun]);
-
-  if (!gun || !cs) {
+  if (!gun) {
     return <div>Loading...</div>;
   }
 
-  const data = gun._.graph;
+  const cs = new GunContinuousSequence(gun);
   const document = {
     ...data[id],
-    atoms: cs.sort(getSet(data, id, "atoms"))
+    atoms: cs.sort(getSet(data, `${id}.atoms`))
   };
 
   return (
     <Preview
       getId={getId}
+      priv={priv}
+      epriv={epriv}
       document={document}
       sort={cs.sort}
       id={id}
-      onPublish={() => {
-        gun
-          .get(id)
-          .get("content")
-          .put(document.atoms.map(atom => atom.atom).join(""));
+      onPublish={async () => {
+        await put(
+          Gun,
+          gun,
+          id,
+          "content",
+          document.atoms.map(atom => atom.atom).join(""),
+          pair
+        );
       }}
     />
   );
