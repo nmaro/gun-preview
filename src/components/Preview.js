@@ -62,17 +62,42 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
         />
       </div>
       <div className="public">
-        <span>
-          <a
-            href={`https://gun-pages.nmaro.now.sh?id=${id}#epriv=${epriv ||
-              ""}`}
-            target="_blank"
-          >
-            public
-          </a>
-        </span>
+        <div>
+          {priv ? (
+            <>
+              <span>
+                <a
+                  href={`https://gun-pages.nmaro.now.sh?id=${id}${s(
+                    { epriv },
+                    "#"
+                  )}`}
+                  target="_blank"
+                >
+                  readonly
+                </a>
+              </span>{" "}
+              <span>
+                <a
+                  href={`https://gun-pages.nmaro.now.sh?id=${id}${hash}`}
+                  target="_blank"
+                >
+                  writable
+                </a>
+              </span>
+            </>
+          ) : (
+            <span>
+              <a
+                href={`https://gun-pages.nmaro.now.sh?id=${id}${hash}`}
+                target="_blank"
+              >
+                public
+              </a>
+            </span>
+          )}
+        </div>
         <iframe
-          src={`https://gun-pages.nmaro.now.sh?id=${id}#epriv=${epriv || ""}`}
+          src={`https://gun-pages.nmaro.now.sh?id=${id}${hash}`}
           frameBorder="0"
         />
       </div>
