@@ -25,7 +25,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
   useEffect(() => {
     const md = MD().use(
       WikiLinks({
-        baseURL: `?id=${pub ? `${pub}.` : ""}`,
+        baseURL: `?id=${pub ? `~${pub}.` : ""}`,
         uriSuffix: hash,
         makeAllLinksAbsolute: true,
         postProcessPageName: pageName => encodeURIComponent(pageName.trim())
