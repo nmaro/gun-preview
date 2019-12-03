@@ -1,8 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { hot } from "react-hot-loader/root";
 import { GunPreview } from "./components/GunPreview";
-
-require("gun/lib/open");
 
 const App = () => {
   const urlParams = new URLSearchParams(window.location.search);

@@ -34,7 +34,7 @@ html,
   flex-direction: column;
   align-items: flex-start;
 }
-.editor iframe {
+iframe {
   width: 100%;
   flex: 1 1 auto;
 }
@@ -46,6 +46,9 @@ html,
 .preview,
 .public {
   flex: 1 1 0%;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
 }
 
 .preview,

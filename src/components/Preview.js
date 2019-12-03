@@ -28,15 +28,18 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
         />
       </div>
       <div className="public">
-        <span>public</span>
-        <h1>{document.title}</h1>
-        <div
-          className="markdown"
-          dangerouslySetInnerHTML={{
-            __html: marked(document.content || "", {
-              sanitize: true
-            })
-          }}
+        <span>
+          <a
+            href={`https://gun-pages.nmaro.now.sh?id=${id}#epriv=${epriv ||
+              ""}`}
+            target="_blank"
+          >
+            public
+          </a>
+        </span>
+        <iframe
+          src={`https://gun-pages.nmaro.now.sh?id=${id}#epriv=${epriv || ""}`}
+          frameBorder="0"
         />
       </div>
     </div>
