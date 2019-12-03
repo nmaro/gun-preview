@@ -3,6 +3,7 @@ import { stringify } from "qs";
 
 import MD from "markdown-it";
 import WikiLinks from "markdown-it-wikilinks";
+import { getPub } from "nicks-gun-utils";
 
 const s = (o, p) => {
   const object = {};
@@ -16,6 +17,7 @@ const s = (o, p) => {
 };
 
 export const Preview = ({ id, priv, epriv, document, onPublish }) => {
+  const pub = getPub(id);
   const title = document.title || id;
 
   const hash = s({ priv, epriv }, "#");
@@ -23,7 +25,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
   useEffect(() => {
     const md = MD().use(
       WikiLinks({
-        baseURL: `?id=${id}.`,
+        baseURL: `?id=${pub ? `${pub}.` : ""}`,
         uriSuffix: hash,
         makeAllLinksAbsolute: true,
         postProcessPageName: pageName => encodeURIComponent(pageName.trim())
