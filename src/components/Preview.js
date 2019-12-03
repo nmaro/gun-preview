@@ -74,7 +74,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
                   )}`}
                   target="_blank"
                 >
-                  readonly
+                  public url
                 </a>
               </span>{" "}
               <span>
@@ -82,7 +82,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
                   href={`https://gun-pages.nmaro.now.sh?id=${id}${hash}`}
                   target="_blank"
                 >
-                  writable
+                  editable url
                 </a>
               </span>
             </>
@@ -92,7 +92,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
                 href={`https://gun-pages.nmaro.now.sh?id=${id}${hash}`}
                 target="_blank"
               >
-                public
+                public url
               </a>
             </span>
           )}
