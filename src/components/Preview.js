@@ -16,6 +16,8 @@ const s = (o, p) => {
 };
 
 export const Preview = ({ id, priv, epriv, document, onPublish }) => {
+  const title = document.title || id;
+
   const hash = s({ priv, epriv }, "#");
   const [md, setMd] = useState();
   useEffect(() => {
@@ -47,7 +49,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
       </div>
       <div className="preview">
         <span>preview</span>
-        <h1>{document.title}</h1>
+        <h1>{title}</h1>
         <div
           className="markdown"
           dangerouslySetInnerHTML={{
