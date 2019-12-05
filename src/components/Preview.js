@@ -98,7 +98,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
           )}
         </div>
         <iframe
-          src={`https://gun-pages.nmaro.now.sh?id=${id}${hash}`}
+          src={`https://gun-pages.nmaro.now.sh?id=${id}${s({ epriv }, "#")}`}
           frameBorder="0"
         />
       </div>

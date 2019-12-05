@@ -26,6 +26,7 @@ html,
   display: flex;
   flex-direction: row;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .editor {
@@ -49,6 +50,7 @@ iframe {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
+  min-width: 20rem;
 }
 
 .preview,
