@@ -46,9 +46,6 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
           src={`https://gun-editor.nmaro.now.sh?id=${id}${hash}`}
           frameBorder="0"
         />
-        <div className="controls">
-          <button onClick={onPublish}>Publish</button>
-        </div>
       </div>
       <div className="preview">
         <span>preview</span>
@@ -61,6 +58,9 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
             })
           }}
         />
+        <div className="controls">
+          <button onClick={onPublish}>Publish</button>
+        </div>
       </div>
       <div className="public">
         <div>

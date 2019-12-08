@@ -1,7 +1,7 @@
 import { Preview } from "./Preview";
 import { GunContinuousSequence } from "crdt-continuous-sequence";
 import React, { useState, useEffect } from "react";
-import { getPub, useGun, getSet, getId, put } from "nicks-gun-utils";
+import { getPub, useGun, getSet, getId } from "nicks-gun-utils";
 
 const Gun = require("gun/gun");
 require("gun/sea");
@@ -10,11 +10,14 @@ export const GunPreview = ({ id, priv, epriv }) => {
   const [gun, setGun] = useState(null);
   const pub = getPub(id);
   const pair = pub && priv && { pub, priv, epriv };
-  const [data, onData] = useGun(Gun, useState, pair);
+  const [data, onData, put] = useGun(Gun, gun, useState, pair);
 
   useEffect(() => {
     const gun = Gun({
-      peers: ["https://gunjs.herokuapp.com/gun"]
+      peers: [
+        "https://gunjs.herokuapp.com/gun",
+        "https://nicks-gun-server.herokuapp.com/gun"
+      ]
     });
     gun.get(id).on(onData);
     gun
@@ -44,14 +47,11 @@ export const GunPreview = ({ id, priv, epriv }) => {
       sort={cs.sort}
       id={id}
       onPublish={async () => {
-        await put(
-          Gun,
-          gun,
+        await put([
           id,
           "content",
-          document.atoms.map(atom => atom.atom).join(""),
-          pair
-        );
+          document.atoms.map(atom => atom.atom).join("")
+        ]);
       }}
     />
   );
