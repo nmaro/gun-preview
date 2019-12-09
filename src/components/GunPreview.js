@@ -5,6 +5,10 @@ import { getPub, useGun, getSet, getId } from "nicks-gun-utils";
 
 const Gun = require("gun/gun");
 require("gun/sea");
+require("gun/lib/radix");
+require("gun/lib/radisk");
+require("gun/lib/store");
+require("gun/lib/rindexed");
 
 export const GunPreview = ({ id, priv, epriv }) => {
   const [gun, setGun] = useState(null);
