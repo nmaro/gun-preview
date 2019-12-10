@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { stringify } from "qs";
 
 import MD from "markdown-it";
 import WikiLinks from "markdown-it-wikilinks";
-import { getPub } from "nicks-gun-utils";
-
-const s = (o, p) => {
-  const object = {};
-  for (const key of Object.keys(o)) {
-    if (o[key]) {
-      object[key] = o[key];
-    }
-  }
-  const stringified = stringify(object);
-  return stringified ? `${p}${stringified}` : "";
-};
+import { getPub, qs } from "nicks-gun-utils";
 
 export const Preview = ({ id, priv, epriv, document, onPublish }) => {
   const pub = getPub(id);
@@ -25,7 +13,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
     window.document.title = title;
   }, [title]);
 
-  const hash = s({ priv, epriv }, "#");
+  const hash = qs({ priv, epriv }, "#");
   const [md, setMd] = useState();
   useEffect(() => {
     const md = MD().use(
@@ -72,7 +60,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
             <>
               <span>
                 <a
-                  href={`https://gun-pages.nmaro.now.sh?id=${id}${s(
+                  href={`https://gun-pages.nmaro.now.sh?id=${id}${qs(
                     { epriv },
                     "#"
                   )}`}
@@ -102,7 +90,7 @@ export const Preview = ({ id, priv, epriv, document, onPublish }) => {
           )}
         </div>
         <iframe
-          src={`https://gun-pages.nmaro.now.sh?id=${id}${s({ epriv }, "#")}`}
+          src={`https://gun-pages.nmaro.now.sh?id=${id}${qs({ epriv }, "#")}`}
           frameBorder="0"
         />
       </div>
