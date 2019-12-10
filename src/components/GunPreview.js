@@ -19,10 +19,7 @@ export const GunPreview = ({ id, priv, epriv }) => {
   useEffect(() => {
     const gun = Gun({
       localStorage: false,
-      peers: [
-        "https://gunjs.herokuapp.com/gun",
-        "https://nicks-gun-server.herokuapp.com/gun"
-      ]
+	  peers: ["https://gunjs.herokuapp.com/gun", "http://nmr.io:8765/gun"],
     });
     gun.get(id).on(onData);
     gun
