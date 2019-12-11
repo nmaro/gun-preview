@@ -19,7 +19,7 @@ export const GunPreview = ({ id, priv, epriv }) => {
   useEffect(() => {
     const gun = Gun({
       localStorage: false,
-	  peers: ["https://gunjs.herokuapp.com/gun", "http://nmr.io:8765/gun"],
+      peers: ["https://gunjs.herokuapp.com/gun", "http://nmr.io:8765/gun"]
     });
     gun.get(id).on(onData);
     gun
@@ -49,11 +49,11 @@ export const GunPreview = ({ id, priv, epriv }) => {
       sort={cs.sort}
       id={id}
       onPublish={async () => {
-        await put([
-          id,
-          "content",
-          document.atoms.map(atom => atom.atom).join("")
-        ]);
+        await put(
+          [id, "content", document.atoms.map(atom => atom.atom).join("")],
+          [id, "updated", +new Date()],
+          [id, "lastUpdate", "Content updated"]
+        );
       }}
     />
   );
